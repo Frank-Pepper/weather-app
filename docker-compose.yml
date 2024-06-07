@@ -1,0 +1,22 @@
+version: '3'
+services:
+  # Create frontend container
+  frontend: # Name of our service
+    container_name: weather-app_frontend
+    build: ./frontend # path to dockerfile
+    ports: # Port binding to host from docker container
+      - "8000:8000"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/webpack.config.js:/app/webpack.config.js
+    depends_on:
+      - backend
+
+  # Create backend container
+  backend:
+    container_name: weather-app_backend
+    build: ./backend
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend/src:/app/src
