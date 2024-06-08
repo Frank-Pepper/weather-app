@@ -1,0 +1,58 @@
+---
+- hosts: ubuntu
+  become: true
+  tasks:
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Add user to "docker" group
+      user:
+        name: ubuntu
+        group: docker
+        groups: sudo
+        append: yes
+
+    - name: Install docker-compose from official GitHub repo
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: u+x,g+x,o+x
+
+    - name: Clone a Github repository
+      git:
+        repo: https://github.com/Frank-Pepper/weather-app.git
+        dest: /home/ubuntu/weather/
+        clone: yes
+      become_user: ubuntu
+
+    - name: Copy api key for open weather
+      copy:
+        src: ../backend/.env
+        dest: /home/ubuntu/weather/.env
+      become_user: ubuntu

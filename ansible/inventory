@@ -1,0 +1,2 @@
+[ubuntu]
+54.145.29.231 ansible_connectin=ssh ansible_ssh_user=ubuntu 
