@@ -1,6 +1,8 @@
 ---
 - hosts: ubuntu
   become: true
+  vars:
+    user_key: "{{ lookup('file', '../id_rsa_internship.pub') }}"
   tasks:
     - name: Install required system packages
       apt:
@@ -56,3 +58,9 @@
         src: ../backend/.env
         dest: /home/ubuntu/weather/backend/.env
       become_user: ubuntu
+
+    - name: "Ensure /home/ubuntu/.ssh/authorized_keys contains public key"
+      lineinfile:
+        name: /home/ubuntu/.ssh/authorized_keys
+        line: "{{user_key}}"
+        state: present

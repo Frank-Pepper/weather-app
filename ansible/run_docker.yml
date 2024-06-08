@@ -1,0 +1,8 @@
+---
+- hosts: ubuntu
+  tasks:
+    - name: Run docker compose
+      community.docker.docker_compose_v2:
+        project_src: /home/ubuntu/weather
+        files:
+        - docker-compose.yml
