@@ -30,7 +30,6 @@ router.get('/api/weather', async ctx => {
   ctx.type = 'application/json; charset=utf-8';
   ctx.body = weatherData.weather ? weatherData.weather[0] : {};
 });
-console.log(`${mapURI}/weather?q=${targetCity}&appid=${appId}&`);
 
 app.use(router.routes());
 app.use(router.allowedMethods());

@@ -54,5 +54,5 @@
     - name: Copy api key for open weather
       copy:
         src: ../backend/.env
-        dest: /home/ubuntu/weather/.env
+        dest: /home/ubuntu/weather/backend/.env
       become_user: ubuntu
