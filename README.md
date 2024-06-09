@@ -6,6 +6,19 @@ Luckily we now have [docker compose](https://docs.docker.com/compose/) saving us
 The idea of the exercise is to improve the bare-bone piece of code (i.e. the weatherapp) and ensure there's adequate infrastructure around it. 
 In real life scenario we might suggest to our customers to leverage cloud services to just run code in a serverless fashion - but that would make it difficult to evaluate technical skills - and that's the whole point of this exercise, ain't it? 
 
+## How to run this application
+Copy your public key to deployer_key.pub it's used in main.tf for terraform key pair, this will give you access to the vm. Default value for the public key is in id_rsa_internship.pub file.
+``` sh
+./start.sh # terraform init and terraform apply, simple script to get public ip addres for vm
+ssh-agent bash
+ssh-add ~/.ssh/id_rsa # path to your private key
+ansible-playbook -i ./ansible/inventory ./ansible/playbook.yml -u ubuntu # playbook which prepares environment
+ansible-playbook -i ./ansible/inventory  ./ansible/run_docker.yml  -u ubuntu # playbook which runs docker compose up
+```
+``` sh
+terraform -chdir=terraform destroy # terminates EC2 instance
+```
+
 
 ## Returning your solution via Github
 Use Github to work on the solution and hand it in. Don't forget to update the README file to make it clear what did you concentrate on.
