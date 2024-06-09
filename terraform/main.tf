@@ -44,6 +44,7 @@ resource "aws_security_group" "app_sg" {
 
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
+  # SSH key default value setup
   public_key = fileexists("../deployer_key.pub") ? file("../deployer_key.pub") : file("../id_rsa_internship.pub")
 }
 

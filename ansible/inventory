@@ -1,2 +1,2 @@
 [ubuntu]
-3.85.232.93 ansible_connectin=ssh ansible_ssh_user=ubuntu
+54.81.138.26 ansible_connectin=ssh ansible_ssh_user=ubuntu

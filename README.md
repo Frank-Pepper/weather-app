@@ -7,6 +7,18 @@ The idea of the exercise is to improve the bare-bone piece of code (i.e. the wea
 In real life scenario we might suggest to our customers to leverage cloud services to just run code in a serverless fashion - but that would make it difficult to evaluate technical skills - and that's the whole point of this exercise, ain't it? 
 
 ## How to run this application
+### First store your api key in .env file in backend directory, it should like this: ```APPID="YOUR_API_KEY"```.
+#### 1. Locally:
+``` sh
+docker compose up
+```
+You can access it by typing ```localhost:8080``` in your browser. 
+
+To stop, run:
+``` sh
+docker compose down
+```
+#### 2. Cloud environment
 Copy your public key to deployer_key.pub it's used in main.tf for terraform key pair, this will give you access to the vm. Default value for the public key is in id_rsa_internship.pub file.
 ``` sh
 ./start.sh # terraform init and terraform apply, simple script to get public ip addres for vm
@@ -15,6 +27,14 @@ ssh-add ~/.ssh/id_rsa # path to your private key
 ansible-playbook -i ./ansible/inventory ./ansible/playbook.yml -u ubuntu # playbook which prepares environment
 ansible-playbook -i ./ansible/inventory  ./ansible/run_docker.yml  -u ubuntu # playbook which runs docker compose up
 ```
+You can access it by pasting the address in the browser   
+```http://54.81.138.26:8080/```
+
+Or SSH as ubuntu user
+```sh
+ssh -i /path/to/key ubuntu@54.81.138.26
+```
+Finally stop your vm instance by running:
 ``` sh
 terraform -chdir=terraform destroy # terminates EC2 instance
 ```
